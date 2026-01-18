@@ -1,0 +1,65 @@
+/*
+ * This is a manifest file that'll be compiled into application.css.
+ *
+ * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
+ * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
+ * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
+ * depending on specificity.
+ *
+ * Consider organizing styles into separate files for maintainability.
+ */
+
+* { box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: #fafafa;
+  color: #333;
+}
+h1 { color: #c0392b; margin-bottom: 0.5rem; }
+h2 { color: #555; margin-top: 2rem; }
+p { margin: 1rem 0; }
+form { margin: 2rem 0; }
+label { display: block; margin-bottom: 0.5rem; font-weight: 600; }
+input[type="text"], input[type="url"] {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+input[type="submit"], button {
+  background: #c0392b;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+input[type="submit"]:hover, button:hover { background: #a93226; }
+.notice { background: #d4edda; color: #155724; padding: 1rem; border-radius: 4px; margin-bottom: 1rem; }
+.alert { background: #f8d7da; color: #721c24; padding: 1rem; border-radius: 4px; margin-bottom: 1rem; }
+.info-box {
+  background: white;
+  border: 1px solid #ddd;
+  padding: 1.5rem;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.info-box label { margin-bottom: 0.25rem; color: #666; font-size: 0.75rem; }
+.info-box code {
+  display: block;
+  background: #f5f5f5;
+  padding: 0.5rem;
+  border-radius: 4px;
+  font-family: monospace;
+  word-break: break-all;
+}
+.danger { background: #dc3545; }
+.danger:hover { background: #c82333; }
+footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #ddd; color: #666; font-size: 0.75rem; }
+a { color: #c0392b; }

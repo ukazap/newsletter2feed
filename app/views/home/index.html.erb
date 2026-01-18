@@ -1,0 +1,34 @@
+<h1>Newsletter2Feed</h1>
+<p>Convert email newsletters into Atom feeds</p>
+
+<%= form_with model: @feed, url: feeds_path do |f| %>
+  <% if @feed.errors.any? %>
+    <div class="alert">
+      <ul>
+        <% @feed.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.label :title, "Feed Title" %>
+  <%= f.text_field :title, placeholder: "My Newsletter", required: true, autofocus: true %>
+
+  <%= f.submit "Create Feed" %>
+<% end %>
+
+<h2>How It Works</h2>
+<ol>
+  <li>Create a feed above with any name you'd like</li>
+  <li>Subscribe to newsletters using the generated email address</li>
+  <li>Add the Atom feed URL to your feed reader</li>
+  <li>Enjoy reading newsletters in your feed reader!</li>
+</ol>
+
+<h2>Notes</h2>
+<ul>
+  <li>Feeds are limited to 512 KB of content (older entries are automatically pruned)</li>
+  <li>Rate limiting: feeds can only be fetched 10 times per hour</li>
+  <li>Keep your feed URL private - anyone with the URL can read your newsletters</li>
+</ul>

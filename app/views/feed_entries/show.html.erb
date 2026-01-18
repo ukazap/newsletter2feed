@@ -1,0 +1,27 @@
+<% content_for :title, @entry.title %>
+
+<p><%= link_to "Back to #{@feed.title}", feed_path(@feed.public_id) %></p>
+
+<h1><%= @entry.title %></h1>
+
+<p>
+  <strong>From:</strong> <%= @entry.author || "Unknown" %><br>
+  <strong>Received:</strong> <%= @entry.created_at.strftime("%Y-%m-%d %H:%M:%S %Z") %>
+</p>
+
+<% if @entry.enclosures.any? %>
+  <h2>Attachments</h2>
+  <ul>
+    <% @entry.enclosures.each do |enclosure| %>
+      <li>
+        <%= link_to enclosure.filename, rails_blob_path(enclosure, disposition: "attachment") %>
+        (<%= number_to_human_size(enclosure.byte_size) %>)
+      </li>
+    <% end %>
+  </ul>
+<% end %>
+
+<h2>Content</h2>
+<div class="info-box">
+  <%= raw @entry.content %>
+</div>
