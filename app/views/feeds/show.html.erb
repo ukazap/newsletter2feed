@@ -1,0 +1,64 @@
+<% content_for :title, "Feed: #{@feed.title}" %>
+<% content_for :head do %>
+  <link rel="alternate" type="application/atom+xml" title="<%= @feed.title %>" href="<%= @feed.atom_url %>">
+<% end %>
+
+<h1><%= @feed.title %></h1>
+
+<div class="info-box">
+  <label>Email Address (subscribe to newsletters with this)</label>
+  <div>
+    <code><%= @feed.email_address %></code>
+    <%= render partial: "shared/copy_button", locals: { text: @feed.email_address } %>
+  </div>
+</div>
+
+<div class="info-box">
+  <label>Atom Feed URL (add this to your feed reader)</label>
+  <div>
+    <code><%= @feed.atom_url %></code>
+    <%= render partial: "shared/copy_button", locals: { text: @feed.atom_url } %>
+  </div>
+</div>
+
+<h2>Settings</h2>
+
+<%= form_with model: @feed, url: feed_path(@feed.public_id), method: :patch do |f| %>
+  <% if @feed.errors.any? %>
+    <div class="alert">
+      <ul>
+        <% @feed.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.label :title, "Feed title" %>
+  <%= f.text_field :title, required: true %>
+
+  <%= f.label :icon, "Icon URL (optional)" %>
+  <%= f.text_field :icon, type: :url, placeholder: "https://example.com/icon.png" %>
+
+  <%= f.submit "Update Feed" %>
+<% end %>
+
+<h2>Entries (<%= @feed.feed_entries.count %>)</h2>
+
+<% if @feed.feed_entries.any? %>
+  <ul>
+    <% @feed.feed_entries.order(created_at: :desc).limit(20).each do |entry| %>
+      <li>
+        <%= link_to entry.title, feed_entry_path(@feed.public_id, entry.public_id) %>
+        <small>(<%= entry.created_at.strftime("%Y-%m-%d %H:%M") %>)</small>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No entries yet. Subscribe to newsletters using the email address above.</p>
+<% end %>
+
+<h2>Danger Zone</h2>
+
+<%= button_to "⚠️ Delete Feed", feed_path(@feed.public_id), method: :delete,
+    data: { turbo_confirm: "Are you sure you want to delete this feed? This cannot be undone." } %>

@@ -1,0 +1,8 @@
+tech_news:
+  public_id: abcdefghij1234567890
+  title: Tech News Weekly
+  icon: https://example.com/icon.png
+
+empty_feed:
+  public_id: emptyemptyemptyempty
+  title: Empty Feed

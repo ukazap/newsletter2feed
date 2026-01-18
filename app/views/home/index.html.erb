@@ -1,0 +1,31 @@
+<p>Get a unique email address that turns newsletters into Atom feeds.</p>
+
+<h2>How it works</h2>
+<ol>
+  <li>Create a feed below with any title you'd like</li>
+  <li>subscribe to newsletters using the generated email address</li>
+  <li>add the Atom feed URL to your feed reader</li>
+  <li>enjoy reading newsletters in your feed reader!</li>
+</ol>
+
+<%= form_with model: @feed, url: feeds_path, html: { class: "inline-form" } do |f| %>
+  <% if @feed.errors.any? %>
+    <div class="alert">
+      <ul>
+        <% @feed.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.text_field :title, placeholder: "Feed title", required: true, autofocus: true %>
+  <%= f.submit "Create Feed" %>
+<% end %>
+
+<h2>Notes</h2>
+<ul>
+  <li>Feeds are limited to <%= number_to_human_size(Feed::MAX_CONTENT_SIZE) %> of content (older entries are automatically pruned)</li>
+  <li>rate limiting: feeds can only be fetched 10 times per hour</li>
+  <li>keep your feed URL private: anyone with the URL can read your newsletters.</li>
+</ul>

@@ -1,0 +1,4 @@
+<%= button_tag type: "button", data: { controller: "copy", copy_text_value: text, action: "click->copy#copyToClipboard" } do %>
+  <%= inline_svg_tag "copy.svg", data: { copy_target: "copyIcon" } %>
+  <%= inline_svg_tag "check.svg", data: { copy_target: "checkIcon" }, class: "hidden" %>
+<% end %>

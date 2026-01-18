@@ -1,0 +1,13 @@
+welcome_email:
+  feed: tech_news
+  public_id: entry1234567890abcde
+  title: Welcome to Tech News
+  author: editor@technews.com
+  content: "<h1>Welcome!</h1><p>Thanks for subscribing to our newsletter.</p>"
+
+latest_update:
+  feed: tech_news
+  public_id: entry2345678901abcdf
+  title: This Week in Tech
+  author: weekly@technews.com
+  content: "<p>Here's what happened this week in technology...</p>"

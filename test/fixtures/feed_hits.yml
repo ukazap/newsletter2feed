@@ -1,0 +1,7 @@
+recent_hit:
+  feed: tech_news
+  created_at: <%= 30.minutes.ago %>
+
+old_hit:
+  feed: tech_news
+  created_at: <%= 2.hours.ago %>

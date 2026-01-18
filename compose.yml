@@ -1,0 +1,27 @@
+services:
+  web:
+    build: .
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      # Random 128+ char hex string (`openssl rand -hex 64`)
+      - SECRET_KEY_BASE=${SECRET_KEY_BASE}
+
+      # Background process/housekeeping
+      - SOLID_QUEUE_IN_PUMA=true
+
+      # Your domain (e.g., `newsletter2feed.example.com`)
+      - APP_HOSTNAME=${APP_HOSTNAME}
+
+      # Same as `APP_HOSTNAME` to enable automatic HTTPS via Let's Encrypt
+      - TLS_DOMAIN=${APP_HOSTNAME}
+
+      # From Mailgun dashboard: Settings → Security & Users → API security
+      - MAILGUN_INGRESS_SIGNING_KEY=${MAILGUN_INGRESS_SIGNING_KEY}
+    volumes:
+      - storage:/rails/storage
+    restart: unless-stopped
+
+volumes:
+  storage:
