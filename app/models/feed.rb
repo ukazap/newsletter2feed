@@ -1,11 +1,11 @@
 class Feed < ApplicationRecord
+  include AtomFeedBuildable
+  include PublicIdGeneratable
+
   has_many :feed_entries, dependent: :destroy
   has_many :feed_hits, dependent: :destroy
 
-  validates :public_id, presence: true, uniqueness: true, length: { is: 20 }
   validates :title, presence: true
-
-  before_validation :generate_public_id, on: :create
 
   RATE_LIMIT_VIEWS = 10
   RATE_LIMIT_PERIOD = 1.hour
@@ -48,12 +48,7 @@ class Feed < ApplicationRecord
   end
 
   private
-
-  def generate_public_id
-    self.public_id ||= SecureRandom.alphanumeric(20).downcase
-  end
-
-  def total_content_size
-    feed_entries.sum("LENGTH(COALESCE(content, ''))")
-  end
+    def total_content_size
+      feed_entries.sum("LENGTH(COALESCE(content, ''))")
+    end
 end

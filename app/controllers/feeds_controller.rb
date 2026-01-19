@@ -20,7 +20,7 @@ class FeedsController < ApplicationController
         else
           @feed.record_hit!
           response.headers["X-Robots-Tag"] = "none"
-          render xml: AtomFeedBuilder.new(@feed).to_xml
+          render xml: @feed.to_atom_xml
         end
       end
     end
@@ -40,12 +40,11 @@ class FeedsController < ApplicationController
   end
 
   private
+    def set_feed
+      @feed = Feed.find_by!(public_id: params[:public_id])
+    end
 
-  def set_feed
-    @feed = Feed.find_by!(public_id: params[:public_id])
-  end
-
-  def feed_params
-    params.require(:feed).permit(:title, :icon, :email_icon)
-  end
+    def feed_params
+      params.require(:feed).permit(:title, :icon, :email_icon)
+    end
 end
