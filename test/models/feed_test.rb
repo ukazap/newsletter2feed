@@ -4,14 +4,15 @@ class FeedTest < ActiveSupport::TestCase
   test "generates public_id on create" do
     feed = Feed.create!(title: "Test Feed")
 
-    assert_match(/\A[a-z0-9]{20}\z/, feed.public_id)
+    assert_equal 36, feed.public_id.length
   end
 
   test "does not overwrite existing public_id" do
-    feed = Feed.new(title: "Test", public_id: "customid1234567890xy")
+    uuid = SecureRandom.uuid_v7
+    feed = Feed.new(title: "Test", public_id: uuid)
     feed.save!
 
-    assert_equal "customid1234567890xy", feed.public_id
+    assert_equal uuid, feed.public_id
   end
 
   test "find_by_email returns nil for blank email" do

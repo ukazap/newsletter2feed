@@ -16,8 +16,8 @@ class FeedsTest < ApplicationSystemTestCase
     click_button "Create Feed"
 
     assert_text "My Newsletter Feed"
-    assert_text "Email Address (subscribe to newsletters with this)"
-    assert_text "Atom Feed URL (add this to your feed reader)"
+    assert_text "Email address (subscribe to newsletters with this)"
+    assert_text "Atom feed URL (add this to your feed reader)"
     assert_selector "code", minimum: 2
     assert_text "No entries yet"
   end
@@ -66,28 +66,31 @@ class FeedsTest < ApplicationSystemTestCase
   end
 
   test "viewing a feed entry" do
-    feed = feeds(:tech_news)
     entry = feed_entries(:welcome_email)
 
-    visit feed_entry_path(feed.public_id, entry.public_id)
+    visit feed_entry_path(entry.public_id)
 
     assert_text entry.title
     assert_text "From: #{entry.author}"
-    assert_text "Welcome!"
-    assert_text "Thanks for subscribing to our newsletter."
-    assert_link "Back to #{feed.title}"
+    within_frame("feed-content") do
+      assert_text "Welcome!"
+      assert_text "Thanks for subscribing to our newsletter."
+    end
   end
 
-  test "navigating from feed to entry and back" do
+  test "navigating from feed to entry" do
     feed = feeds(:tech_news)
+    entry = feed_entries(:welcome_email)
 
     visit feed_path(feed.public_id)
     click_link "Welcome to Tech News"
 
-    assert_text "Welcome!"
-    click_link "Back to #{feed.title}"
+    assert_current_path feed_entry_path(entry.public_id)
 
-    assert_current_path feed_path(feed.public_id)
+    within_frame("feed-content") do
+      assert_text "Welcome!"
+      assert_text "Thanks for subscribing to our newsletter."
+    end
   end
 
   test "deleting a feed" do

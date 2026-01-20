@@ -20,9 +20,14 @@
   </head>
 
   <body>
-    <a href="/" class="logo">
-      <%= inline_svg_tag "logo.svg", width: 60, height: 60 %><span>Newsletter2Feed</span>
-    </a>
+    <% if content_for(:letterhead) %>
+      <%= yield :letterhead %>
+    <% else %>
+      <a href="/" class="logo">
+        <%= inline_svg_tag "logo.svg", width: 60, height: 60 %>
+        <span>Newsletter2Feed</span>
+      </a>
+    <% end %>
 
     <% if notice.present? %>
       <div class="flash notice" data-controller="flash">
@@ -40,7 +45,7 @@
     <%= yield %>
 
     <footer>
-      <p>Made by <a href="https://github.com/ukazap/newsletter2feed">@ukazap</a> and was inspired by <a href="https://kill-the-newsletter.com/"><em>Kill the Newsletter!</em></a></p>
+      <p>Powered by <a href="https://github.com/ukazap/newsletter2feed">Newsletter2Feed</a></p>
     </footer>
   </body>
 </html>

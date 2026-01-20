@@ -21,20 +21,17 @@ class NewslettersMailbox < ApplicationMailbox
 
   private
     def find_feed
-      recipient = mail.recipients.find { |r| r.match?(/\A[a-z0-9]{20}@/i) }
-      @feed = Feed.find_by_email(recipient)
-
-      unless @feed
-        bounced!
+      mail.recipients.each do |r|
+        @feed = Feed.find_by_email(r)
+        break if @feed
       end
+
+      bounced! unless @feed
     end
 
     def check_aggregator
       from_address = mail.from&.first&.downcase || ""
-
-      if BLOCKED_AGGREGATORS.any? { |domain| from_address.end_with?("@#{domain}") }
-        bounced!
-      end
+      bounced! if BLOCKED_AGGREGATORS.any? { |domain| from_address.end_with?("@#{domain}") }
     end
 
     def extract_author

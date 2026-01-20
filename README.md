@@ -5,15 +5,14 @@ Get a unique email address that turns newsletters into Atom feeds.
 ## How it works
 
 1. Create a feed with any title you'd like
-
-<img src="https://github.com/user-attachments/assets/4ce624f1-6fcd-4bc5-8d8b-c8fe9b891d16" width="500" />
-
 2. Subscribe to newsletters using the generated email address
-
-<img src="https://github.com/user-attachments/assets/86e938bd-9b9b-4476-9cd9-3e1150f65e8c" width="500" />
-
 3. Add the Atom feed URL to your feed reader.
 
+<img src="https://github.com/user-attachments/assets/8ad0e59f-c138-4ec5-bd0a-64f9c41fe335" width="500" />
+
+<hr>
+
+<img src="https://github.com/user-attachments/assets/35524a2f-979b-474f-bf68-26aed5c1a646" width="500" />
 
 ## Deployment
 

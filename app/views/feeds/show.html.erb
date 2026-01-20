@@ -1,12 +1,17 @@
 <% content_for :title, "Feed: #{@feed.title}" %>
+
 <% content_for :head do %>
   <link rel="alternate" type="application/atom+xml" title="<%= @feed.title %>" href="<%= @feed.atom_url %>">
 <% end %>
 
-<h1><%= @feed.title %></h1>
+<% content_for :letterhead do %>
+  <a href="/" class="logo"><%= inline_svg_tag "logo.svg", width: 30, height: 30 %></a>
+<% end %>
+
+<h1>Feed: <%= @feed.title %></h1>
 
 <div class="info-box">
-  <label>Email Address (subscribe to newsletters with this)</label>
+  <label>Email address (subscribe to newsletters with this)</label>
   <div>
     <code><%= @feed.email_address %></code>
     <%= render partial: "shared/copy_button", locals: { text: @feed.email_address } %>
@@ -14,7 +19,7 @@
 </div>
 
 <div class="info-box">
-  <label>Atom Feed URL (add this to your feed reader)</label>
+  <label>Atom feed URL (add this to your feed reader)</label>
   <div>
     <code><%= @feed.atom_url %></code>
     <%= render partial: "shared/copy_button", locals: { text: @feed.atom_url } %>
@@ -47,9 +52,9 @@
 
 <% if @feed.feed_entries.any? %>
   <ul>
-    <% @feed.feed_entries.order(created_at: :desc).limit(20).each do |entry| %>
+    <% @feed.feed_entries.order(created_at: :desc).each do |entry| %>
       <li>
-        <%= link_to entry.title, feed_entry_path(@feed.public_id, entry.public_id) %>
+        <%= link_to entry.title, feed_entry_path(entry.public_id) %>
         <small>(<%= entry.created_at.strftime("%Y-%m-%d %H:%M") %>)</small>
       </li>
     <% end %>

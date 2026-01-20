@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_18_034044) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_20_051326) do
   create_table "action_mailbox_inbound_emails", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "message_checksum", null: false
@@ -53,7 +53,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_18_034044) do
     t.text "content"
     t.datetime "created_at", null: false
     t.integer "feed_id", null: false
-    t.string "public_id", limit: 20, null: false
+    t.string "public_id", limit: 36, null: false
     t.string "title", null: false
     t.datetime "updated_at", null: false
     t.index ["feed_id", "created_at"], name: "index_feed_entries_on_feed_id_and_created_at"
@@ -72,7 +72,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_18_034044) do
     t.datetime "created_at", null: false
     t.string "email_icon"
     t.string "icon"
-    t.string "public_id", limit: 20, null: false
+    t.string "public_id", limit: 36, null: false
     t.string "title", null: false
     t.datetime "updated_at", null: false
     t.index ["public_id"], name: "index_feeds_on_public_id", unique: true

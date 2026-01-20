@@ -1,27 +1,39 @@
 <% content_for :title, @entry.title %>
 
-<p><%= link_to "Back to #{@feed.title}", feed_path(@feed.public_id) %></p>
+<% content_for :head do %>
+  <style>
+    h1 { font-size: 1rem; }
 
-<h1><%= @entry.title %></h1>
+    #feed-content {
+      height: calc(100vh - 45vh);
+      min-height: 400px;
+    }
+  </style>
+<% end %>
 
-<p>
-  <strong>From:</strong> <%= @entry.author || "Unknown" %><br>
-  <strong>Received:</strong> <%= @entry.created_at.strftime("%Y-%m-%d %H:%M:%S %Z") %>
-</p>
-
-
-<div class="info-box"><%= sanitize_email @entry.content %></div>
+<% content_for :letterhead do %>
+  <a href="/" class="logo"><%= inline_svg_tag "logo.svg", width: 30, height: 30 %></a>
+  <h1><%= @entry.title %></h1>
+  <p>
+    <strong>From:</strong> <%= @entry.author || "Unknown" %><br>
+    <strong>Received:</strong> <%= @entry.created_at.strftime("%Y-%m-%d %H:%M:%S %Z") %>
+  </p>
+<% end %>
 
 <% if @entry.enclosures.any? %>
-  <div class="info-box">
-    Attachments
-    <ul>
-      <% @entry.enclosures.each do |enclosure| %>
-        <li>
-          <%= link_to enclosure.filename, rails_blob_path(enclosure, disposition: "attachment") %>
-          (<%= number_to_human_size(enclosure.byte_size) %>)
-        </li>
-      <% end %>
-    </ul>
-  </div>
+  <details>
+    <summary><%= count = @entry.enclosures.length %> <%= "attachment".pluralize(count) %></summary>
+    <% @entry.enclosures.each.with_index do |enclosure, idx| %>
+      <%= link_to enclosure.filename, rails_blob_path(enclosure, disposition: "attachment") %>
+      (<%= number_to_human_size(enclosure.byte_size) %>)<%= ", " if idx < count - 1 %>
+    <% end %>
+  </details>
 <% end %>
+
+<div class="info-box">
+  <%= content_tag :iframe, "", id: "feed-content",
+                               sandbox: true,
+                               srcdoc: @entry.content,
+                               width: "100%",
+                               frameborder: "0" %>
+</div>

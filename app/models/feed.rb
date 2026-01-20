@@ -39,12 +39,8 @@ class Feed < ApplicationRecord
   end
 
   def self.find_by_email(email)
-    return nil unless email.present?
-
-    local_part = email.split("@").first&.downcase
-    return nil unless local_part&.match?(/\A[a-z0-9]{20}\z/)
-
-    find_by(public_id: local_part)
+    local_part = email&.split("@")&.first&.downcase
+    find_by(public_id: local_part) if local_part.present?
   end
 
   private
