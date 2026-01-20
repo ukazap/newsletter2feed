@@ -32,7 +32,8 @@
 
 <div class="info-box">
   <%= content_tag :iframe, "", id: "feed-content",
-                               sandbox: true,
+                               sandbox: "allow-popups allow-popups-to-escape-sandbox",
+                               credentialless: true,
                                srcdoc: @entry.content,
                                width: "100%",
                                frameborder: "0" %>
